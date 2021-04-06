@@ -36,25 +36,25 @@ A validator queue is added by default in the staking module.
 make
 
 ## init
-cudos-poc-01d init cudos-poc-01-network --chain-id=cudos-poc-01-network --home=./HOME
+cudos-poc-03d init cudos-poc-03-network --chain-id=cudos-poc-03-network --home=./HOME
 
 ## create staking account
-cudos-poc-01d keys add validator01 --keyring-backend test --home=./HOME
+cudos-poc-03d keys add validator01 --keyring-backend test --home=./HOME
 
 ## get validator's address
-cudos-poc-01d keys show validator01 -a --keyring-backend test --home=./HOME
+cudos-poc-03d keys show validator01 -a --keyring-backend test --home=./HOME
 
 ## add stacking account
-cudos-poc-01d add-genesis-account $MY_VALIDATOR_ADDRESS 100000000000stake --home=./HOME
+cudos-poc-03d add-genesis-account $MY_VALIDATOR_ADDRESS 100000000000stake --home=./HOME
 
 ## create gen tx
-cudos-poc-01d gentx validator01 100000000stake --chain-id cudos-poc-01-network --keyring-backend test --home=./HOME
+cudos-poc-03d gentx validator01 100000000stake --chain-id cudos-poc-03-network --keyring-backend test --home=./HOME
 
 ## add tx to genesis
-cudos-poc-01d collect-gentxs --home=./HOME
+cudos-poc-03d collect-gentxs --home=./HOME
 
 ## start
-cudos-poc-01d start --home=./HOME
+cudos-poc-03d start --home=./HOME
 
 # docker
 

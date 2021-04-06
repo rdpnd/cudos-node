@@ -3,8 +3,8 @@ package main
 import (
 	"os"
 
-	"cudos.org/cudos-poc-01/app"
-	"cudos.org/cudos-poc-01/cmd/cudos-poc-01d/cmd"
+	"cudos.org/cudos-poc-03/app"
+	"cudos.org/cudos-poc-03/cmd/cudos-poc-03d/cmd"
 	svrcmd "github.com/cosmos/cosmos-sdk/server/cmd"
 )
 
