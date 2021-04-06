@@ -4,3 +4,4 @@ frontend/.cache
 secret.yml
 local-accounts.txt
 HOME
+/data
