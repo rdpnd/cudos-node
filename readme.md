@@ -54,7 +54,7 @@ cudos-poc-02d gentx validator01 100000000stake --chain-id cudos-poc-02-network -
 cudos-poc-02d collect-gentxs --home=./data/init-01
 
 ## start
-cudos-poc-02d start --home=./data/init-01
+cudos-poc-02d start --minimum-gas-prices=1stake --home=./data/init-01
 
 # docker
 
