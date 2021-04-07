@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 
 	"github.com/cosmos/cosmos-sdk/snapshots"
-	"cudos.org/cudos-poc-03/app/params"
+	"cudos.org/cudos-poc-02/app/params"
 
 	"github.com/spf13/cast"
 	"github.com/spf13/cobra"
@@ -33,7 +33,7 @@ import (
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	"github.com/cosmos/cosmos-sdk/x/crisis"
 	genutilcli "github.com/cosmos/cosmos-sdk/x/genutil/client/cli"
-	"cudos.org/cudos-poc-03/app"
+	"cudos.org/cudos-poc-02/app"
 )
 
 var ChainID string

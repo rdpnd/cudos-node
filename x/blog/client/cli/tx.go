@@ -10,7 +10,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/tx"
 
 	// "github.com/cosmos/cosmos-sdk/client/flags"
-	"cudos.org/cudos-poc-03/x/blog/types"
+	"cudos.org/cudos-poc-02/x/blog/types"
 )
 
 // GetTxCmd returns the transaction commands for this module

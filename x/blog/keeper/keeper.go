@@ -7,7 +7,7 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"cudos.org/cudos-poc-03/x/blog/types"
+	"cudos.org/cudos-poc-02/x/blog/types"
 )
 
 type (

@@ -8,7 +8,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/tx"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/rest"
-	"cudos.org/cudos-poc-03/x/blog/types"
+	"cudos.org/cudos-poc-02/x/blog/types"
 	"github.com/gorilla/mux"
 )
 
