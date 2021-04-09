@@ -1,4 +1,4 @@
-# POC 3 - Add support for Staking, Slashing and Delegation
+# POC 2 - Add support for Staking, Slashing and Delegation
 This project uses the default blog project from starport. It's purpose is to prove POC 3 requirements, such as:
  - Add support for staking, delegation and slashing in the network. 
  - Verify how vesting scheme can be applied. 
@@ -28,45 +28,10 @@ As per the default implementation of the staking module and the vesting account 
 ## Add support for Validators Queue
 A validator queue is added by default in the staking module.
 
-# Local build of this project
+<br />
+<br />
+<br />
 
---home param on each commad indicates the blockchain storage directory.
-
-## make
-make
-
-## init
-cudos-poc-02d init cudos-poc-02-network --chain-id=cudos-poc-02-network --home=./data/init-01
-
-## create staking account
-cudos-poc-02d keys add validator01 --keyring-backend test --home=./data/init-01
-
-## get validator's address
-cudos-poc-02d keys show validator01 -a --keyring-backend test --home=./data/init-01
-
-## add stacking account
-cudos-poc-02d add-genesis-account $MY_VALIDATOR_ADDRESS 100000000000stake --home=./data/init-01
-
-## create gen tx
-cudos-poc-02d gentx validator01 100000000stake --chain-id cudos-poc-02-network --keyring-backend test --home=./data/init-01
-
-## add tx to genesis
-cudos-poc-02d collect-gentxs --home=./data/init-01
-
-## start
-cudos-poc-02d start --minimum-gas-prices=1stake --home=./data/init-01
-
-# docker
-
-1. Build persistent-node
-cd ./docker
-docker-compose -f .\persistent-node.yml -p cudos-network-persistent-node up --build
-
-2. After node starts copy its it and paste it into full-node.yml
-Peer node looks like:
-P2P Node ID ID=de14a2005d220171c7133efb31b3f3e1d7ba776a file=/root/.blog/config/node_key.json module=p2p
-
-3. Run full-node
-cd ./docker
-docker-compose -f .\full-node.yml -p cudos-network-full-node up --build
+# Build
+The project can be build in any of the ways described in POC1 branch
 
