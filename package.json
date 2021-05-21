@@ -1,0 +1,22 @@
+{
+  "name": "sample-cosmjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "custom-send.js",
+  "scripts": {
+    "send": "node custom-send.js",
+    "admin-spend": "node src/codec/admin/custom-admin-send.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@cosmjs/proto-signing": "^0.25.3",
+    "@cosmjs/stargate": "^0.25.3",
+    "protobufjs": "~6.10.2",
+    "ts-proto": "^1.80.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.2.4"
+  }
+}
