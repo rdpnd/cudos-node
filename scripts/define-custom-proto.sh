@@ -17,7 +17,9 @@ protoc \
   --proto_path="$COSMOS_PROTO_DIR" \
   --proto_path="$THIRD_PARTY_PROTO_DIR" \
   --ts_proto_opt="esModuleInterop=true,forceLong=long,useOptionals=true" \
-  "$CUDOS_PROTO_DIR/admin/tx.proto"
+  "$CUDOS_PROTO_DIR/admin/tx.proto" \
+  "$COSMOS_PROTO_DIR/cosmos/gov/v1beta1/tx.proto" \
+  "$COSMOS_PROTO_DIR/cosmos/gov/v1beta1/gov.proto" \
 
 # Remove unnecessary codec files
 rm -rf \

@@ -6,6 +6,7 @@
   "scripts": {
     "send": "node custom-send.js",
     "admin-spend": "node src/codec/admin/custom-admin-send.js",
+    "gov-proposal": "node src/codec/cosmos/gov/v1beta1/custom-gov-proposal.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
