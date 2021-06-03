@@ -1,4 +1,4 @@
-# Cudos Network upgradability PoC
+# Cudos Network Testnet PoC
 
 This is a blockchain built using Cosmos SDK and Tendermint and created with [Starport](https://github.com/tendermint/starport) in order to test Cosmos upgradability concepts.
 
