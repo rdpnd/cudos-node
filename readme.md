@@ -1,4 +1,4 @@
-# Cosmos upgradability PoC
+# Cudos Network upgradability PoC
 
 This is a blockchain built using Cosmos SDK and Tendermint and created with [Starport](https://github.com/tendermint/starport) in order to test Cosmos upgradability concepts.
 
@@ -12,7 +12,7 @@ This is a blockchain built using Cosmos SDK and Tendermint and created with [Sta
  * [Chain upgrade guide](https://docs.cosmos.network/v0.42/migrations/chain-upgrade-guide-040.html)
 
 
-## Cosmos upgrade procedure overview
+## Cudos Network upgrade procedure overview
 
 * Upgrades are facilitated via the Cosmos's upgrade module. This module's keeper stores plans that have either upgrade height or upgrade time specified. Furthermore, this module has a hook in the `BeginBlocker` that that watches for such plans and execute specific upgrade handlers or halts the blockhain state machine if no upgrade handler has been defined.
 
