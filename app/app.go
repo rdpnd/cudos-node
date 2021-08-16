@@ -413,6 +413,7 @@ func New(
 		keys[cudoMinttypes.MemStoreKey],
 		app.BankKeeper,
 		app.AccountKeeper,
+		app.StakingKeeper,
 		app.GetSubspace(cudoMinttypes.ModuleName),
 		authtypes.FeeCollectorName,
 	)

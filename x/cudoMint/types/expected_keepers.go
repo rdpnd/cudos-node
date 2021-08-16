@@ -2,6 +2,7 @@ package types
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/cosmos/cosmos-sdk/x/staking/types"
 )
 
 // BankKeeper defines the contract needed to be fulfilled for banking and supply
@@ -15,4 +16,13 @@ type BankKeeper interface {
 // AccountKeeper defines the contract required for account APIs.
 type AccountKeeper interface {
 	GetModuleAddress(name string) sdk.AccAddress
+}
+
+type StakingKeeper interface {
+	GetValidator(ctx sdk.Context, addr sdk.ValAddress) (types.Validator, bool)
+	BondDenom(ctx sdk.Context) string
+	Delegate(
+		ctx sdk.Context, delAddr sdk.AccAddress, bondAmt sdk.Int, tokenSrc types.BondStatus,
+		validator types.Validator, subtractAccount bool,
+	) (sdk.Dec, error)
 }

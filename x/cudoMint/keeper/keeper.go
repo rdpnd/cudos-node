@@ -14,10 +14,11 @@ import (
 
 type (
 	Keeper struct {
-		cdc      codec.Marshaler
-		storeKey sdk.StoreKey
-		memKey   sdk.StoreKey
+		cdc              codec.Marshaler
+		storeKey         sdk.StoreKey
+		memKey           sdk.StoreKey
 		bankKeeper       types.BankKeeper
+		StakingKeeper    types.StakingKeeper
 		feeCollectorName string
 		paramSpace       paramtypes.Subspace
 		// this line is used by starport scaffolding # ibc/keeper/attribute
@@ -30,9 +31,10 @@ func NewKeeper(
 	memKey sdk.StoreKey,
 	bk types.BankKeeper,
 	ak types.AccountKeeper,
+	sk types.StakingKeeper,
 	paramSpace paramtypes.Subspace,
 	feeCollectorName string,
-	// this line is used by starport scaffolding # ibc/keeper/parameter
+// this line is used by starport scaffolding # ibc/keeper/parameter
 ) *Keeper {
 	// ensure mint module account is set
 	if addr := ak.GetModuleAddress(types.ModuleName); addr == nil {
@@ -43,13 +45,13 @@ func NewKeeper(
 		paramSpace = paramSpace.WithKeyTable(types.ParamKeyTable())
 	}
 
-
 	return &Keeper{
-		cdc:      cdc,
-		storeKey: storeKey,
-		memKey:   memKey,
-		bankKeeper: bk,
-		paramSpace: paramSpace,
+		cdc:              cdc,
+		storeKey:         storeKey,
+		memKey:           memKey,
+		bankKeeper:       bk,
+		StakingKeeper:    sk,
+		paramSpace:       paramSpace,
 		feeCollectorName: feeCollectorName,
 		// this line is used by starport scaffolding # ibc/keeper/return
 	}
