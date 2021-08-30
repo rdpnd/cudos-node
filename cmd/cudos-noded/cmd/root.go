@@ -4,8 +4,9 @@ import (
 	"errors"
 	"github.com/CosmWasm/wasmd/x/wasm"
 	"github.com/cosmos/cosmos-sdk/client/config"
+	"github.com/cosmos/cosmos-sdk/crypto/keyring"
+	"github.com/spf13/viper"
 	"github.com/tharsis/ethermint/crypto/hd"
-	srvflags "github.com/tharsis/ethermint/server/flags"
 	"io"
 	"os"
 	"path/filepath"
@@ -24,7 +25,6 @@ import (
 	gravitycmd "github.com/althea-net/cosmos-gravity-bridge/module/cmd/gravity/cmd"
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/client"
-	"github.com/cosmos/cosmos-sdk/client/debug"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/rpc"
 	sdkserver "github.com/cosmos/cosmos-sdk/server"
@@ -38,6 +38,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/crisis"
 	genutilcli "github.com/cosmos/cosmos-sdk/x/genutil/client/cli"
 	ethermintclient "github.com/tharsis/ethermint/client"
+	"github.com/tharsis/ethermint/client/debug"
 	evmserver "github.com/tharsis/ethermint/server"
 	servercfg "github.com/tharsis/ethermint/server/config"
 )
@@ -125,9 +126,27 @@ func initRootCmd(rootCmd *cobra.Command, encodingConfig params.EncodingConfig) {
 		ethermintclient.KeyCommands(app.DefaultNodeHome),
 		gravitycmd.Commands(app.DefaultNodeHome),
 	)
-	rootCmd = srvflags.AddTxFlags(rootCmd)
+	rootCmd = AddTxFlags(rootCmd)
 
 	rootCmd.AddCommand(sdkserver.RosettaCommand(encodingConfig.InterfaceRegistry, encodingConfig.Marshaler))
+}
+
+// AddTxFlags adds common flags for commands to post tx
+func AddTxFlags(cmd *cobra.Command) *cobra.Command {
+	cmd.PersistentFlags().String(flags.FlagChainID, "testnet", "Specify Chain ID for sending Tx")
+	cmd.PersistentFlags().String(flags.FlagFrom, "", "Name or address of private key with which to sign")
+	cmd.PersistentFlags().String(flags.FlagFees, "", "Fees to pay along with transaction; eg: 10acudos")
+	cmd.PersistentFlags().String(flags.FlagGasPrices, "", "Gas prices to determine the transaction fee (e.g. 10acudos)")
+	cmd.PersistentFlags().String(flags.FlagNode, "tcp://localhost:26657", "<host>:<port> to tendermint rpc interface for this chain")
+	cmd.PersistentFlags().Float64(flags.FlagGasAdjustment, flags.DefaultGasAdjustment, "adjustment factor to be multiplied against the estimate returned by the tx simulation; if the gas limit is set manually this flag is ignored ")
+	cmd.PersistentFlags().StringP(flags.FlagBroadcastMode, "b", flags.BroadcastSync, "Transaction broadcasting mode (sync|async|block)")
+	cmd.PersistentFlags().String(flags.FlagKeyringBackend, keyring.BackendFile, "Select keyring's backend")
+	viper.BindPFlag(flags.FlagNode, cmd.Flags().Lookup(flags.FlagNode))
+	// nolint: errcheck
+	viper.BindPFlag(flags.FlagKeyringBackend, cmd.Flags().Lookup(flags.FlagKeyringBackend))
+	// nolint: errcheck
+	cmd.MarkFlagRequired(flags.FlagChainID)
+	return cmd
 }
 
 func addModuleInitFlags(startCmd *cobra.Command) {

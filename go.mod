@@ -14,14 +14,15 @@ require (
 	github.com/gorilla/mux v1.8.0
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0
 	github.com/regen-network/cosmos-proto v0.3.1
-	github.com/spf13/cast v1.4.0
+	github.com/spf13/cast v1.4.1
 	github.com/spf13/cobra v1.2.1
 	github.com/spf13/pflag v1.0.5
-	github.com/tendermint/tendermint v0.34.11
+	github.com/spf13/viper v1.8.1
+	github.com/tendermint/tendermint v0.34.12
 	github.com/tendermint/tm-db v0.6.4
-	github.com/tharsis/ethermint v0.4.2-0.20210816094510-cc3b2ff8e9ac
-	google.golang.org/genproto v0.0.0-20210602131652-f16073e35f0c
-	google.golang.org/grpc v1.38.0
+	github.com/tharsis/ethermint v0.4.2-0.20210825151512-5eb3458d119e
+	google.golang.org/genproto v0.0.0-20210824181836-a4879c3d0e89
+	google.golang.org/grpc v1.40.0
 
 )
 
