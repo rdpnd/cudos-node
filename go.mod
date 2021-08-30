@@ -4,8 +4,8 @@ go 1.15
 
 require (
 	github.com/CosmWasm/wasmd v0.17.0
-	github.com/cosmos/cosmos-sdk v0.43.0
 	github.com/althea-net/cosmos-gravity-bridge/module v0.0.0-00010101000000-000000000000
+	github.com/cosmos/cosmos-sdk v0.43.0
 	github.com/cosmos/ibc-go v1.0.0
 	github.com/ethereum/go-ethereum v1.10.3
 	github.com/gogo/protobuf v1.3.3
