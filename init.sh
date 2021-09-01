@@ -42,7 +42,10 @@ BLOCKS_PER_YEAR="6311520" # 6311520 originally
 
 # bank parameters
 BANK_SEND_ENABLED='[{"denom": "cudosAdmin", "enabled": false}]'
+BANK_SYMBOL="cudos"
+BANK_NAME="cudos"
 
+EVM_DENOM='acudos'
 DENOM_METADATA_DESC="The native staking token of the Cudos Hub."
 DENOM1="acudos" EXP1="0" ALIAS1="attocudos"
 DENOM2="fcudos" EXP2="3" ALIAS2="femtocudos"
@@ -98,8 +101,20 @@ cat "${CUDOS_HOME}/config/genesis.json" | jq --arg BLOCKS_PER_YEAR "$BLOCKS_PER_
 # setting bank params
 cat "${CUDOS_HOME}/config/genesis.json" | jq  --argjson BANK_SEND_ENABLED "$BANK_SEND_ENABLED" '.app_state.bank.params.send_enabled = $BANK_SEND_ENABLED' > "${CUDOS_HOME}/config/tmp_genesis.json" && mv "${CUDOS_HOME}/config/tmp_genesis.json" "${CUDOS_HOME}/config/genesis.json"
 
+
+cat "${CUDOS_HOME}/config/genesis.json" | jq  --arg BANK_SYMBOL "$BANK_SYMBOL" '.app_state.bank.denom_metadata[0].symbol = $BANK_SYMBOL' > "${CUDOS_HOME}/config/tmp_genesis.json" && mv "${CUDOS_HOME}/config/tmp_genesis.json" "${CUDOS_HOME}/config/genesis.json"
+cat "${CUDOS_HOME}/config/genesis.json" | jq  --arg BANK_NAME "$BANK_NAME" '.app_state.bank.denom_metadata[0].name = $BANK_NAME' > "${CUDOS_HOME}/config/tmp_genesis.json" && mv "${CUDOS_HOME}/config/tmp_genesis.json" "${CUDOS_HOME}/config/genesis.json"
+
+# setting evm params
+cat "${CUDOS_HOME}/config/genesis.json" | jq  --arg EVM_DENOM "$EVM_DENOM" '.app_state.evm.params.evm_denom = $EVM_DENOM' > "${CUDOS_HOME}/config/tmp_genesis.json" && mv "${CUDOS_HOME}/config/tmp_genesis.json" "${CUDOS_HOME}/config/genesis.json"
+
 # setting fractions metadata
 cat "${CUDOS_HOME}/config/genesis.json" | jq --arg DENOM_METADATA_DESC "$DENOM_METADATA_DESC" --arg DENOM1 "$DENOM1" --arg EXP1 "$EXP1" --arg ALIAS1 "$ALIAS1" --arg DENOM2 "$DENOM2" --arg EXP2 "$EXP2" --arg ALIAS2 "$ALIAS2" --arg DENOM3 "$DENOM3" --arg EXP3 "$EXP3" --arg ALIAS3 "$ALIAS3" --arg DENOM4 "$DENOM4" --arg EXP4 "$EXP4" --arg ALIAS4 "$ALIAS4" --arg DENOM5 "$DENOM5" --arg EXP5 "$EXP5" --arg ALIAS5 "$ALIAS5" --arg DENOM6 "$DENOM6" --arg EXP6 "$EXP6" --arg ALIAS6 "$ALIAS6" --arg DENOM7 "$DENOM7" --arg EXP7 "$EXP7" --arg BASE "$BASE" --arg DISPLAY "$DISPLAY" '.app_state.bank.denom_metadata[0].description=$DENOM_METADATA_DESC | .app_state.bank.denom_metadata[0].denom_units[0].denom=$DENOM1 | .app_state.bank.denom_metadata[0].denom_units[0].exponent=$EXP1 | .app_state.bank.denom_metadata[0].denom_units[0].aliases[0]=$ALIAS1 | .app_state.bank.denom_metadata[0].denom_units[1].denom=$DENOM2 | .app_state.bank.denom_metadata[0].denom_units[1].exponent=$EXP2 | .app_state.bank.denom_metadata[0].denom_units[1].aliases[0]=$ALIAS2 | .app_state.bank.denom_metadata[0].denom_units[2].denom=$DENOM3 | .app_state.bank.denom_metadata[0].denom_units[2].exponent=$EXP3 | .app_state.bank.denom_metadata[0].denom_units[2].aliases[0]=$ALIAS3 | .app_state.bank.denom_metadata[0].denom_units[3].denom=$DENOM4 | .app_state.bank.denom_metadata[0].denom_units[3].exponent=$EXP4 | .app_state.bank.denom_metadata[0].denom_units[3].aliases[0]=$ALIAS4 | .app_state.bank.denom_metadata[0].denom_units[4].denom=$DENOM5 | .app_state.bank.denom_metadata[0].denom_units[4].exponent=$EXP5 | .app_state.bank.denom_metadata[0].denom_units[4].aliases[0]=$ALIAS5 | .app_state.bank.denom_metadata[0].denom_units[5].denom=$DENOM6 | .app_state.bank.denom_metadata[0].denom_units[5].exponent=$EXP6 | .app_state.bank.denom_metadata[0].denom_units[5].aliases[0]=$ALIAS6 | .app_state.bank.denom_metadata[0].denom_units[6].denom=$DENOM7 | .app_state.bank.denom_metadata[0].denom_units[6].exponent=$EXP7 | .app_state.bank.denom_metadata[0].base=$BASE | .app_state.bank.denom_metadata[0].display=$DISPLAY'  > "${CUDOS_HOME}/config/tmp_genesis.json" && mv "${CUDOS_HOME}/config/tmp_genesis.json" "${CUDOS_HOME}/config/genesis.json"
+
+# Update Ethermint's client.toml
+sed -i "s/chain-id = .*/chain-id = \"$CHAIN_ID\"/" "${CUDOS_HOME}/config/client.toml"
+sed -i "s/keyring-backend = .*/keyring-backend = \"test\"/" "${CUDOS_HOME}/config/client.toml"
+
 
 # add a new key entry from which to make validator
   cudos-noded keys add root-validator-01  --keyring-backend test --algo 'eth_secp256k1' |& tee "${CUDOS_HOME}/root-validator-01.wallet"
@@ -117,7 +132,7 @@ PRIVATE_SALE_OFFER_ADDRESS=$(  cudos-noded keys show private-sale-offer -a  --ke
 cudos-noded add-genesis-account $ROOT_VALIDATOR_01_ADDRESS "100000000000000000000100000${BOND_DENOM},1cudosAdmin"
 cudos-noded add-genesis-account $VALIDATOR_02_ADDRESS "100000000000000100000${BOND_DENOM},1cudosAdmin"
 cudos-noded add-genesis-account $VALIDATOR_03_ADDRESS "100000000000000100000${BOND_DENOM},1cudosAdmin"
-cudos-noded gentx root-validator-01 "1000000000000000000000${BOND_DENOM}" --chain-id $CHAIN_ID
+cudos-noded gentx root-validator-01 "1000000000000000000000${BOND_DENOM}" '0x9fdE6D55dDa637806DbF016a03B6970613630333' 'cudos1g6wvv0fk2q5m2xh0yk2app0ewp6f6aum7v2j7y' --chain-id $CHAIN_ID
 
 
 # test validator creation on genesis
@@ -146,7 +161,7 @@ cudos-noded add-genesis-account $FAUCET_ADDRESS "1000000000000000000000000${BOND
 #cat "${CUDOS_HOME}/config/genesis.json" | jq --argjson PRIVATE_SALE_OFFER_BALANCE "$PRIVATE_SALE_OFFER_BALANCE" '.app_state.bank.balances += [$PRIVATE_SALE_OFFER_BALANCE]' > "${CUDOS_HOME}/config/tmp_genesis.json" && mv "${CUDOS_HOME}/config/tmp_genesis.json" "${CUDOS_HOME}/config/genesis.json"
 
 
-#cudos-noded collect-gentxs
+cudos-noded collect-gentxs
 
 sed -i "s/pex = true/pex = false/" "${CUDOS_HOME}/config/config.toml"
 
@@ -156,3 +171,5 @@ sed -i "s/private_peer_ids = \"\"/private_peer_ids = \"$MY_OWN_PEER_ID\"/g" "${C
 cudos-noded tendermint show-node-id |& tee "${CUDOS_HOME}/tendermint.nodeid"
 
 chmod 755 "${CUDOS_HOME}/config"
+
+ cudos-noded start --home ./cudos-data/ --pruning nothing  --json-rpc.api eth,txpool,personal,net,debug,web3,miner --trace --log_level debug --json-rpc.enable=true
