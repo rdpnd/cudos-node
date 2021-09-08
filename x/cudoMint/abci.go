@@ -1,17 +1,18 @@
 package cudoMint
 
 import (
+	"time"
+
 	"cudos.org/cudos-node/x/cudoMint/keeper"
 	"cudos.org/cudos-node/x/cudoMint/types"
 	"github.com/cosmos/cosmos-sdk/telemetry"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"time"
 )
 
 // Minting based on the formula f(t)=358 - 53 * t + 1.8 * t^2, where t is number of years passed since the release = 150mil, 7 sec - 150mils/(7)
 var (
 	// based on the assumption that we have 1 block per 5 seconds
-	denom               = "acudos" // Hardcoded to the acudos currency. Its not changeable, because some of the math depends on the size of this denomination
+	denom               = "acudos"         // Hardcoded to the acudos currency. Its not changeable, because some of the math depends on the size of this denomination
 	totalDays           = sdk.NewInt(3652) // Hardcoded to 10 years
 	FinalNormTimePassed = sdk.NewDec(10)
 	zeroPointSix        = sdk.MustNewDecFromStr("0.6")
